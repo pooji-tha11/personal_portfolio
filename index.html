@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Poojitha Ramkumar | Portfolio</title>
+  <meta name="description" content="Personal portfolio of Poojitha Ramkumar, B.E. Computer Science student at Chennai Institute of Technology. Exploring cybersecurity, backend systems, web development, and open source.">
+  <meta name="theme-color" content="#F4EBDD">
+
+  <!-- Google Fonts: Fraunces (Variable Display) & Manrope (Body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+</head>
+<body class="intro-active">
+
+  <!-- SVG Grain Texture Filter Overlay -->
+  <svg class="noise-svg-def" aria-hidden="true" width="0" height="0">
+    <filter id="noise-filter">
+      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch" />
+      <feColorMatrix type="matrix" values="0 0 0 0 0.16   0 0 0 0 0.14   0 0 0 0 0.12  0 0 0 0.04 0" />
+    </filter>
+  </svg>
+  <div class="grain-overlay" aria-hidden="true"></div>
+
+  <!-- Custom Cursor Follower Dot (Desktop Only) -->
+  <div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+
+  <!-- Scroll Progress Indicator Bar at Top of Viewport -->
+  <div class="scroll-progress-bar" id="scroll-progress-bar" role="progressbar" aria-label="Reading progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+
+  <!-- =========================================================================
+       INTRO LOADING SCREEN: Retro Desktop Computer
+       ========================================================================= -->
+  <aside class="intro-screen" id="intro-screen" aria-label="Welcome interactive computer screen">
+    <a href="#main-content" class="skip-intro-link" id="skip-intro">Skip intro &rarr;</a>
+
+    <div class="intro-scene-wrapper">
+      <div class="retro-pc-container" id="retro-pc">
+        <!-- Inline SVG retro computer -->
+        <svg class="retro-pc-svg" id="pc-svg" viewBox="0 0 760 580" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Retro desktop computer illustration">
+          <defs>
+            <linearGradient id="crt-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#1B1714" />
+              <stop offset="100%" stop-color="#0F0C0B" />
+            </linearGradient>
+            <radialGradient id="crt-glow" cx="50%" cy="50%" r="65%">
+              <stop offset="0%" stop-color="#3D3027" stop-opacity="0.8" />
+              <stop offset="100%" stop-color="#151210" stop-opacity="1" />
+            </radialGradient>
+            <filter id="power-glow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="3.5" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+
+          <!-- Computer Shadow -->
+          <ellipse cx="380" cy="540" rx="310" ry="24" fill="#29231F" fill-opacity="0.16" />
+
+          <!-- Monitor Stand Base -->
+          <rect x="290" y="420" width="180" height="20" rx="4" fill="#E5D7C3" stroke="#29231F" stroke-width="4" />
+          <path d="M330 380 L350 420 L410 420 L430 380 Z" fill="#D3C3AD" stroke="#29231F" stroke-width="4" />
+
+          <!-- Monitor Housing / Case -->
+          <rect x="140" y="50" width="480" height="340" rx="28" fill="#E5D7C3" stroke="#29231F" stroke-width="6" />
+          <!-- Monitor Inner Bezel -->
+          <rect x="175" y="80" width="410" height="260" rx="16" fill="#C6A98B" stroke="#29231F" stroke-width="4" />
+
+          <!-- CRT Screen Frame -->
+          <g id="crt-screen-group">
+            <rect id="crt-screen-bg" x="195" y="100" width="370" height="220" rx="10" fill="url(#crt-grad)" stroke="#29231F" stroke-width="3" />
+            <!-- Scanlines overlay -->
+            <rect x="195" y="100" width="370" height="220" rx="10" fill="url(#crt-glow)" class="crt-glow-rect" />
+
+            <!-- Dynamic Boot / Screen Foreign Object -->
+            <foreignObject x="205" y="110" width="350" height="200" class="screen-fo">
+              <div xmlns="http://www.w3.org/1999/xhtml" class="screen-content" id="screen-content">
+                <!-- Idle State Message -->
+                <div class="screen-idle-state" id="screen-idle">
+                  <p class="blink-prompt">&gt; Press any key or click power to boot_</p>
+                </div>
+
+                <!-- Boot Sequence Output -->
+                <div class="screen-boot-state" id="screen-boot" style="display: none;">
+                  <div class="boot-log" id="boot-log"></div>
+                  <div class="boot-progress-track">
+                    <div class="boot-progress-bar" id="boot-progress-bar"></div>
+                  </div>
+                </div>
+
+                <!-- Ready State -->
+                <div class="screen-ready-state" id="screen-ready" style="display: none;">
+                  <span class="greet-kicker">SYSTEM READY</span>
+                  <h2 class="greet-title">Hi, I’m Poojitha.</h2>
+                  <p class="greet-sub">Welcome to my workspace.</p>
+                  <button type="button" class="btn-enter" id="btn-enter-portfolio">
+                    <span>Open portfolio</span>
+                    <span class="btn-enter-kbd" aria-hidden="true">&crarr; Enter</span>
+                  </button>
+                </div>
+              </div>
+            </foreignObject>
+          </g>
+
+          <!-- Monitor Bottom Bar & Power Button -->
+          <g id="monitor-controls">
+            <!-- Floppy drive slot aesthetic -->
+            <rect x="220" y="356" width="110" height="7" rx="3" fill="#29231F" />
+            <circle cx="345" cy="359.5" r="3.5" fill="#C6A98B" stroke="#29231F" stroke-width="1.5" />
+            
+            <!-- Air vent grills -->
+            <line x1="375" y1="357" x2="435" y2="357" stroke="#29231F" stroke-width="2.5" stroke-linecap="round" />
+            <line x1="375" y1="363" x2="435" y2="363" stroke="#29231F" stroke-width="2.5" stroke-linecap="round" />
+
+            <!-- Power Button & LED -->
+            <g id="power-button" class="clickable-power" role="button" tabindex="0" aria-label="Turn on computer">
+              <rect x="525" y="351" width="38" height="18" rx="5" fill="#C6A98B" stroke="#29231F" stroke-width="2.5" />
+              <circle id="power-led" cx="544" cy="360" r="5" fill="#6B5D51" stroke="#29231F" stroke-width="1.5" />
+            </g>
+          </g>
+
+          <!-- Keyboard -->
+          <g id="keyboard-group">
+            <!-- Keyboard Base -->
+            <path d="M190 470 L570 470 L585 530 L175 530 Z" fill="#E5D7C3" stroke="#29231F" stroke-width="4" />
+            <path d="M205 478 L555 478 L568 522 L192 522 Z" fill="#C6A98B" stroke="#29231F" stroke-width="2.5" />
+            
+            <!-- Key rows (drawn as SVGs that depress on key press) -->
+            <!-- Row 1 -->
+            <g class="key-row" transform="translate(210, 482)">
+              <rect class="key-cap" id="k-1" x="0" y="0" width="24" height="8" rx="2" fill="#E5D7C3" stroke="#29231F" stroke-width="1.5" />
+              <rect class="key-cap" id="k-2" x="28" y="0" width="24" height="8" rx="2" fill="#E5D7C3" stroke="#29231F" stroke-width="1.5" />
+              <rect class="key-cap" id="k-3" x="56" y="0" width="24" height="8" rx="2" fill="#E5D7C3" stroke="#29231F" stroke-width="1.5" />
+              <rect class="key-cap" id="k-4" x="84" y="0" width="24" height="8" rx="2" fill="#E5D7C3" stroke="#29231F" stroke-width="1.5" />
+              <rect class="key-cap" id="k-5" x="112" y="0" width="24" height="8" rx="2" fill="#E5D7C3" stroke="#29231F" stroke-width="1.5" />
+              <rect class="key-cap" id="k-6" x="140" y="0" width="24" height="8" rx="2" fill="#E5D7C3" stroke="#29231F" stroke-width="1.5" />
+              <rect class="key-cap" id="k-7" x="168" y="0" width="24" height="8" rx="2" fill="#E5D7C3" stroke="#29231F" stroke-width="1.5" />
+              <rect class="key-cap" id="k-8" x="196" y="0" width="24" height="8" rx="2" fill="#E5D7C3" stroke="#29231F" stroke-width="1.5" />
+              <rect class="key-cap" id="k-9" x="224" y="0" width="24" height="8" rx="2" fill="#E5D7C3" stroke="#29231F" stroke-width="1.5" />
+              <rect class="key-cap" id="k-10" x="252" y="0" width="24" height="8" rx="2" fill="#E5D7C3" stroke="#29231F" stroke-width="1.5" />
+              <rect class="key-cap" id="k-11" x="280" y="0" width="24" height="8" rx="2" fill="#E5D7C3" stroke="#29231F" stroke-width="1.5" />
+              <rect class="key-cap" id="k-12" x="308" y="0" width="28" height="8" rx="2" fill="#A66B4F" stroke="#29231F" stroke-width="1.5" />
+            </g>
+            <!-- Row 2 -->
+            <g class="key-row" transform="translate(206, 494)">
+              <rect class="key-cap" id="k-13" x="0" y="0" width="30" height="9" rx="2" fill="#E5D7C3" stroke="#29231F" stroke-width="1.5" />
+              <rect class="key-cap" id="k-14" x="34" y="0" width="24" height="9" rx="2" fill="#E5D7C3" stroke="#29231F" stroke-width="1.5" />
+              <rect class="key-cap" id="k-15" x="62" y="0" width="24" height="9" rx="2" fill="#E5D7C3" stroke="#29231F" stroke-width="1.5" />
+              <rect class="key-cap" id="k-16" x="90" y="0" width="24" height="9" rx="2" fill="#E5D7C3" stroke="#29231F" stroke-width="1.5" />
+              <rect class="key-cap" id="k-17" x="118" y="0" width="24" height="9" rx="2" fill="#E5D7C3" stroke="#29231F" stroke-width="1.5" />
+              <rect class="key-cap" id="k-18" x="146" y="0" width="24" height="9" rx="2" fill="#E5D7C3" stroke="#29231F" stroke-width="1.5" />
+              <rect class="key-cap" id="k-19" x="174" y="0" width="24" height="9" rx="2" fill="#E5D7C3" stroke="#29231F" stroke-width="1.5" />
+              <rect class="key-cap" id="k-20" x="202" y="0" width="24" height="9" rx="2" fill="#E5D7C3" stroke="#29231F" stroke-width="1.5" />
+              <rect class="key-cap" id="k-21" x="230" y="0" width="24" height="9" rx="2" fill="#E5D7C3" stroke="#29231F" stroke-width="1.5" />
+              <rect class="key-cap" id="k-22" x="258" y="0" width="24" height="9" rx="2" fill="#E5D7C3" stroke="#29231F" stroke-width="1.5" />
+              <rect class="key-cap" id="k-23" x="286" y="0" width="24" height="9" rx="2" fill="#E5D7C3" stroke="#29231F" stroke-width="1.5" />
+              <rect class="key-cap" id="k-24" x="314" y="0" width="30" height="9" rx="2" fill="#A66B4F" stroke="#29231F" stroke-width="1.5" />
+            </g>
+            <!-- Row 3: Spacebar row -->
+            <g class="key-row" transform="translate(202, 507)">
+              <rect class="key-cap" id="k-25" x="0" y="0" width="36" height="10" rx="2" fill="#E5D7C3" stroke="#29231F" stroke-width="1.5" />
+              <rect class="key-cap" id="k-26" x="40" y="0" width="30" height="10" rx="2" fill="#E5D7C3" stroke="#29231F" stroke-width="1.5" />
+              <rect class="key-cap space-key" id="k-space" x="74" y="0" width="190" height="10" rx="2" fill="#E5D7C3" stroke="#29231F" stroke-width="1.5" />
+              <rect class="key-cap" id="k-27" x="268" y="0" width="36" height="10" rx="2" fill="#E5D7C3" stroke="#29231F" stroke-width="1.5" />
+              <rect class="key-cap" id="k-28" x="308" y="0" width="40" height="10" rx="2" fill="#A66B4F" stroke="#29231F" stroke-width="1.5" />
+            </g>
+          </g>
+
+          <!-- Mouse -->
+          <g id="mouse-group" transform="translate(605, 485)">
+            <path d="M-15 0 C -10 -25, -25 -45, -45 -30" stroke="#29231F" stroke-width="2.5" fill="none" />
+            <rect x="0" y="0" width="42" height="60" rx="14" fill="#E5D7C3" stroke="#29231F" stroke-width="3" />
+            <line x1="21" y1="0" x2="21" y2="24" stroke="#29231F" stroke-width="2.5" />
+            <line x1="0" y1="24" x2="42" y2="24" stroke="#29231F" stroke-width="2" />
+          </g>
+        </svg>
+      </div>
+    </div>
+  </aside>
+
+  <!-- =========================================================================
+       FIXED HEADER & NAVIGATION
+       ========================================================================= -->
+  <header class="site-header" id="site-header">
+    <div class="header-inner">
+      <!-- Left: Logo mark -->
+      <a href="#home" class="logo-mark" aria-label="Poojitha Ramkumar - return to top">
+        <span class="logo-circle"><span class="bracket">&lt;</span>pr<span class="bracket">&gt;</span></span>
+      </a>
+
+      <!-- Center: Nav pill with sliding indicator -->
+      <nav class="nav-pill" aria-label="Main Navigation">
+        <span class="nav-indicator" id="nav-indicator" aria-hidden="true"></span>
+        <ul class="nav-list" id="nav-list">
+          <li><a href="#home" class="nav-link active" data-section="home">Home</a></li>
+          <li><a href="#about" class="nav-link" data-section="about">About</a></li>
+          <li><a href="#work" class="nav-link" data-section="work">Work</a></li>
+          <li><a href="#education" class="nav-link" data-section="education">Education</a></li>
+          <li><a href="#contact" class="nav-link" data-section="contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- Right: Open CV button (floats bottom-right on screens <820px) -->
+      <a href="assets/Poojitha_Ramkumar_Resume.pdf" target="_blank" rel="noopener" class="cv-button" id="cv-button" aria-label="Open Poojitha Ramkumar Resume (PDF in new tab)">
+        <span class="cv-text">Open CV</span>
+        <svg class="cv-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="7" y1="17" x2="17" y2="7"></line>
+          <polyline points="7 7 17 7 17 17"></polyline>
+        </svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       MAIN CONTENT
+       ========================================================================= -->
+  <main id="main-content">
+
+    <!-- 1. HOME HERO -->
+    <section class="section-home" id="home" aria-label="Introduction">
+      <div class="container hero-container">
+        
+        <div class="hero-name-block">
+          <h1 class="hero-display-name" id="hero-name" aria-label="Poojitha Ramkumar">
+            <!-- First Name (Decrypted via JS, plain fallback in HTML) -->
+            <span class="name-row name-first" id="decrypt-first">
+              <span class="char" data-final="P">P</span>
+              <span class="char" data-final="o">o</span>
+              <span class="char" data-final="o">o</span>
+              <span class="char" data-final="j">j</span>
+              <span class="char" data-final="i">i</span>
+              <span class="char" data-final="t">t</span>
+              <span class="char" data-final="h">h</span>
+              <span class="char" data-final="a">a</span>
+            </span>
+            <!-- Last Name in Italic Terracotta -->
+            <span class="name-row name-last" id="decrypt-last">
+              <span class="char" data-final="R">R</span>
+              <span class="char" data-final="a">a</span>
+              <span class="char" data-final="m">m</span>
+              <span class="char" data-final="k">k</span>
+              <span class="char" data-final="u">u</span>
+              <span class="char" data-final="m">m</span>
+              <span class="char" data-final="a">a</span>
+              <span class="char" data-final="r">r</span>
+            </span>
+          </h1>
+        </div>
+
+        <div class="hero-intro-grid">
+          <p class="hero-intro-copy">
+            Second-year computer science student at Chennai Institute of Technology. I like understanding how things work, from web apps to the security around them, and building practical projects along the way.
+          </p>
+          <div class="hero-action">
+            <!-- Single fixed button -->
+            <a href="#work" class="btn btn-hero">See my work &darr;</a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Marquee Ticker: speeds up and skews with scroll velocity -->
+      <div class="marquee-wrapper" aria-hidden="true">
+        <div class="marquee-track" id="marquee-track">
+          <span class="ticker-item">cybersecurity</span>
+          <span class="ticker-sep">&bull;</span>
+          <span class="ticker-item">web development</span>
+          <span class="ticker-sep">&bull;</span>
+          <span class="ticker-item">artificial intelligence</span>
+          <span class="ticker-sep">&bull;</span>
+          <span class="ticker-item">open source</span>
+          <span class="ticker-sep">&bull;</span>
+          <span class="ticker-item">backend</span>
+          <span class="ticker-sep">&bull;</span>
+          <span class="ticker-item">Linux</span>
+          <span class="ticker-sep">&bull;</span>
+          <!-- Duplicate set for seamless continuous loop -->
+          <span class="ticker-item">cybersecurity</span>
+          <span class="ticker-sep">&bull;</span>
+          <span class="ticker-item">web development</span>
+          <span class="ticker-sep">&bull;</span>
+          <span class="ticker-item">artificial intelligence</span>
+          <span class="ticker-sep">&bull;</span>
+          <span class="ticker-item">open source</span>
+          <span class="ticker-sep">&bull;</span>
+          <span class="ticker-item">backend</span>
+          <span class="ticker-sep">&bull;</span>
+          <span class="ticker-item">Linux</span>
+          <span class="ticker-sep">&bull;</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. ABOUT -->
+    <section class="section-about section-sand" id="about" aria-label="About Me">
+      <div class="container">
+        
+        <div class="about-hero-grid">
+          <div class="about-narrative">
+            <h2 class="section-heading reveal-heading">Curious about how things hold up.</h2>
+            
+            <!-- Paragraph whose words light up one by one as you scroll -->
+            <p class="illuminated-paragraph" id="illuminated-text">
+              I am a second-year B.E. Computer Science and Engineering student at Chennai Institute of Technology (2025 to 2029). What excites me most is dissecting systems—understanding how software architectures fit together, where digital interfaces expose security vulnerabilities, and how defensive engineering keeps critical applications stable. I combine hands-on full-stack development with a deliberate, disciplined dive into cybersecurity, defensive programming, and backend workflows.
+            </p>
+
+            <div class="interests-block">
+              <h3 class="subsection-eyebrow">Beyond the screen</h3>
+              <p class="interests-list">
+                Photography &bull; Drawing &bull; Swimming &bull; Badminton &bull; Biking &bull; Hiking &bull; Travel
+              </p>
+            </div>
+          </div>
+
+          <!-- Portrait Placeholder Arch with Parallax -->
+          <div class="portrait-column">
+            <div class="portrait-arch" id="portrait-arch">
+              <div class="portrait-inner">
+                <span class="portrait-monogram">PR</span>
+                <span class="portrait-caption">Poojitha Ramkumar</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Skills Grid of Tiles with Soft Terracotta Glow -->
+        <div class="skills-section">
+          <div class="section-header-compact">
+            <h3 class="subsection-title">Technical Skills &amp; Focus Areas</h3>
+            <p class="subsection-note">Practical foundations built through coursework, projects, and active curiosity.</p>
+          </div>
+
+          <div class="skills-grid" id="skills-grid">
+            <!-- 1. Languages -->
+            <article class="skill-tile">
+              <h4 class="skill-group-title">Languages</h4>
+              <ul class="chip-list">
+                <li class="chip">Java</li>
+                <li class="chip">Python</li>
+                <li class="chip">C++</li>
+                <li class="chip">C</li>
+              </ul>
+            </article>
+
+            <!-- 2. Frontend -->
+            <article class="skill-tile">
+              <h4 class="skill-group-title">Frontend</h4>
+              <ul class="chip-list">
+                <li class="chip">HTML</li>
+                <li class="chip">CSS</li>
+                <li class="chip">JavaScript</li>
+                <li class="chip">React</li>
+                <li class="chip">Vite</li>
+                <li class="chip">Tailwind CSS</li>
+              </ul>
+            </article>
+
+            <!-- 3. Backend & Databases -->
+            <article class="skill-tile">
+              <h4 class="skill-group-title">Backend &amp; Databases</h4>
+              <ul class="chip-list">
+                <li class="chip">FastAPI</li>
+                <li class="chip">Flask</li>
+                <li class="chip">REST API concepts</li>
+                <li class="chip">SQLAlchemy</li>
+                <li class="chip">Pydantic</li>
+                <li class="chip">Uvicorn</li>
+                <li class="chip">MySQL</li>
+                <li class="chip">SQLite</li>
+                <li class="chip">JDBC</li>
+              </ul>
+            </article>
+
+            <!-- 4. Python & Scraping -->
+            <article class="skill-tile">
+              <h4 class="skill-group-title">Python &amp; Scraping</h4>
+              <ul class="chip-list">
+                <li class="chip">Requests</li>
+                <li class="chip">BeautifulSoup</li>
+                <li class="chip">Web scraping</li>
+                <li class="chip">HTML parsing</li>
+                <li class="chip">Regular expressions</li>
+                <li class="chip">URL parsing</li>
+                <li class="chip">hashlib</li>
+              </ul>
+            </article>
+
+            <!-- 5. Tools & Core Concepts -->
+            <article class="skill-tile">
+              <h4 class="skill-group-title">Tools &amp; Core Concepts</h4>
+              <ul class="chip-list">
+                <li class="chip">Git</li>
+                <li class="chip">GitHub</li>
+                <li class="chip">VS Code</li>
+                <li class="chip">Linux</li>
+                <li class="chip">Ubuntu</li>
+                <li class="chip">VirtualBox</li>
+                <li class="chip">OOP</li>
+                <li class="chip">Data structures &amp; algorithms</li>
+                <li class="chip">Database design &amp; ER models</li>
+              </ul>
+            </article>
+
+            <!-- 6. Security (Exploring) -->
+            <article class="skill-tile skill-tile-exploring">
+              <div class="exploring-badge">Exploring</div>
+              <h4 class="skill-group-title">Security</h4>
+              <ul class="chip-list">
+                <li class="chip">Password analysis</li>
+                <li class="chip">Hash generation &amp; analysis</li>
+                <li class="chip">MD5</li>
+                <li class="chip">SHA-1</li>
+                <li class="chip">SHA-256</li>
+                <li class="chip">URL analysis</li>
+                <li class="chip">Password hashing concepts</li>
+                <li class="chip">JWT concepts</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+
+        <!-- Hackathons (Open list, not in a box so more can easily be added) -->
+        <div class="hackathons-section">
+          <div class="section-header-compact">
+            <h3 class="subsection-title">Hackathons</h3>
+            <p class="subsection-note">Hands-on collaborative building and problem solving under time-bound constraints. (Participation)</p>
+          </div>
+
+          <div class="hackathons-list">
+            <div class="hackathon-row">
+              <div class="hackathon-info">
+                <h4 class="hackathon-name">Hack Fusion 2026</h4>
+                <span class="hackathon-org">Chennai Institute of Technology</span>
+              </div>
+              <span class="hackathon-badge">Participant</span>
+            </div>
+
+            <div class="hackathon-row">
+              <div class="hackathon-info">
+                <h4 class="hackathon-name">Women Who Master Hackathon</h4>
+                <span class="hackathon-org">Organized by Logitech &amp; Aspire For Her</span>
+              </div>
+              <span class="hackathon-badge">Participant</span>
+            </div>
+
+            <div class="hackathon-row">
+              <div class="hackathon-info">
+                <h4 class="hackathon-name">Adobe University Hackathon</h4>
+                <span class="hackathon-org">Adobe</span>
+              </div>
+              <span class="hackathon-badge">Participant</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 3. WORK (PROJECTS, SMALLER THINGS, EXPERIENCE) -->
+    <section class="section-work" id="work" aria-label="Selected Work and Experience">
+      
+      <!-- STACKING PANELS WRAPPER -->
+      <div class="sticky-panels-container" id="sticky-panels-wrap">
+        
+        <div class="panel-intro-header">
+          <h2 class="section-heading reveal-heading">Featured Projects</h2>
+          <p class="section-subtext">Selected software projects built to explore systems, security, and developer utilities.</p>
+        </div>
+
+        <!-- PANEL 1: Cozy Pomodoro (Deployed) -->
+        <article class="project-panel project-panel-light" id="panel-1">
+          <div class="project-panel-content">
+            <div class="project-info">
+              <div class="project-header-row">
+                <span class="status-pill status-deployed">Deployed</span>
+                <span class="project-num">01 / 03</span>
+              </div>
+              <h3 class="project-title">Cozy Pomodoro</h3>
+              <p class="project-desc">
+                A serene, high-utility Pomodoro timer designed for sustained deep work. Features configurable focus and break cycles, integrated task checklists, persistent session history, momentum tracking, a dedicated dark mode, and distraction-free fullscreen support.
+              </p>
+              <div class="project-meta-block">
+                <span class="meta-label">Technologies:</span>
+                <p class="tech-stack-text">React, Vite, JavaScript, CSS, localStorage, lucide-react</p>
+              </div>
+              <div class="project-links">
+                <a href="https://pomo-pomodoro.vercel.app" target="_blank" rel="noopener" class="btn btn-project-primary">
+                  <span>Live App</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                </a>
+                <a href="https://github.com/pooji-tha11/Pomodoro-POMO" target="_blank" rel="noopener" class="btn btn-project-secondary">
+                  <span>GitHub</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                </a>
+              </div>
+            </div>
+
+            <!-- Visual: Static SVG Progress Ring -->
+            <div class="project-visual-side">
+              <div class="pomo-visual-card">
+                <div class="pomo-ring-wrapper">
+                  <svg class="pomo-ring-svg" viewBox="0 0 200 200" aria-label="Pomodoro progress ring">
+                    <circle cx="100" cy="100" r="80" stroke="#C6A98B" stroke-width="10" fill="none" opacity="0.3" />
+                    <circle class="pomo-ring-progress" id="pomo-progress-circle" cx="100" cy="100" r="80" stroke="#A66B4F" stroke-width="10" fill="none" stroke-linecap="round" stroke-dasharray="502.65" stroke-dashoffset="135" transform="rotate(-90 100 100)" />
+                  </svg>
+                  <div class="pomo-center-stats">
+                    <span class="pomo-time-display" id="pomo-timer-val">25:00</span>
+                    <span class="pomo-status-label">Focus Session</span>
+                  </div>
+                </div>
+                <div class="pomo-pill-row">
+                  <span class="pomo-chip">Task Panel</span>
+                  <span class="pomo-chip">Session History</span>
+                  <span class="pomo-chip">Dark Mode</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- PANEL 2: Cyber Security Assessment Toolkit (In Progress, Deep Espresso) -->
+        <article class="project-panel project-panel-dark" id="panel-2">
+          <div class="project-panel-content">
+            <div class="project-info">
+              <div class="project-header-row">
+                <span class="status-pill status-progress">In progress</span>
+                <span class="project-num">02 / 03</span>
+              </div>
+              <h3 class="project-title text-light">Cyber Security Assessment Toolkit</h3>
+              <p class="project-desc text-light-muted">
+                A modular Flask toolkit developed to study fundamental security concepts hands-on. Implements password strength analysis, cryptographic hash generation (MD5, SHA-1, SHA-256), and URL safety verification. Network port scanning is planned for future implementation.
+              </p>
+              <div class="project-meta-block">
+                <span class="meta-label text-light-muted">Technologies:</span>
+                <p class="tech-stack-text text-light">Python, Flask, HTML, CSS, Bootstrap, hashlib, regular expressions</p>
+              </div>
+              <div class="project-links">
+                <a href="https://github.com/pooji-tha11/cyber-toolkit" target="_blank" rel="noopener" class="btn btn-project-accent">
+                  <span>GitHub Repository</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                </a>
+              </div>
+            </div>
+
+            <!-- Visual: Working In-Browser Security Demo -->
+            <div class="project-visual-side">
+              <div class="security-demo-box">
+                <div class="demo-badge">In-Browser Concept Demo</div>
+                <label for="sec-demo-input" class="demo-label">Test a password or string:</label>
+                <div class="demo-input-wrap">
+                  <input type="text" id="sec-demo-input" class="demo-input" placeholder="Type to compute live hash..." value="Security CIT 2026!" spellcheck="false" autocomplete="off">
+                </div>
+
+                <!-- Strength Meter -->
+                <div class="strength-meter-wrap">
+                  <div class="strength-header">
+                    <span class="strength-tag">Complexity Meter:</span>
+                    <span class="strength-val" id="strength-val">Strong</span>
+                  </div>
+                  <div class="meter-bar-track">
+                    <div class="meter-bar-fill" id="meter-fill" style="width: 85%;"></div>
+                  </div>
+                </div>
+
+                <!-- Real-time SHA-256 computation -->
+                <div class="hash-output-wrap">
+                  <span class="hash-title">Live SHA-256 Digest (crypto.subtle):</span>
+                  <code class="hash-value" id="sec-hash-val">Computing...</code>
+                </div>
+                <p class="demo-disclaimer">Illustration demonstrating the toolkit’s core concepts directly in your browser.</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- PANEL 3: PrepSphere Placement Prep Tracker (In Progress) -->
+        <article class="project-panel project-panel-sand" id="panel-3">
+          <div class="project-panel-content">
+            <div class="project-info">
+              <div class="project-header-row">
+                <span class="status-pill status-progress">In progress</span>
+                <span class="project-num">03 / 03</span>
+              </div>
+              <h3 class="project-title">PrepSphere</h3>
+              <p class="project-subtitle">Placement Preparation Tracker</p>
+              <p class="project-desc">
+                An all-in-one placement preparation workspace architected to track DSA practice across topics and difficulty tiers, showcase technical projects, organize STAR-framework interview narratives, record target job applications, monitor study goals, and manage multiple resume iterations.
+              </p>
+              <div class="project-meta-block">
+                <span class="meta-label">Technologies:</span>
+                <p class="tech-stack-text">Java, Spring Boot, React, Vite, Tailwind CSS, MySQL, JDBC</p>
+              </div>
+              <div class="project-links">
+                <a href="https://github.com/pooji-tha11/Placement_prep_tracker" target="_blank" rel="noopener" class="btn btn-project-secondary">
+                  <span>GitHub Repository</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                </a>
+              </div>
+            </div>
+
+            <!-- Visual: Animated Bars (Illustration only) -->
+            <div class="project-visual-side">
+              <div class="prepsphere-card">
+                <div class="prep-header">
+                  <span class="prep-badge">Tracker Dashboard Concept</span>
+                </div>
+                
+                <div class="prep-bars-list">
+                  <div class="prep-bar-group">
+                    <div class="prep-bar-labels">
+                      <span>Data Structures &amp; Algorithms</span>
+                      <span>250+ Solved</span>
+                    </div>
+                    <div class="prep-track">
+                      <div class="prep-fill" style="width: 78%; background-color: #A66B4F;"></div>
+                    </div>
+                  </div>
+
+                  <div class="prep-bar-group">
+                    <div class="prep-bar-labels">
+                      <span>STAR Interview Stories</span>
+                      <span>6 Scenarios</span>
+                    </div>
+                    <div class="prep-track">
+                      <div class="prep-fill" style="width: 60%; background-color: #8E5A41;"></div>
+                    </div>
+                  </div>
+
+                  <div class="prep-bar-group">
+                    <div class="prep-bar-labels">
+                      <span>Core Java 21 &amp; JDBC</span>
+                      <span>5 Modules</span>
+                    </div>
+                    <div class="prep-track">
+                      <div class="prep-fill" style="width: 88%; background-color: #29231F;"></div>
+                    </div>
+                  </div>
+
+                  <div class="prep-bar-group">
+                    <div class="prep-bar-labels">
+                      <span>Application Tracking</span>
+                      <span>Active Pipelines</span>
+                    </div>
+                    <div class="prep-track">
+                      <div class="prep-fill" style="width: 45%; background-color: #C6A98B;"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="prep-footer-note">Designed to streamline campus recruitment preparation end-to-end.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- SMALLER THINGS & CONCEPTS (Expandable Rows) -->
+      <!-- SMALLER THINGS & EXPLORATIONS: Interactive Journey Timeline (Inspired by GDG CIT) -->
+      <div class="smaller-things-section" id="journey-section">
+        <div class="container">
+          <div class="journey-header-wrap">
+            <div class="section-header-compact">
+              <h3 class="subsection-title">Smaller Things &amp; Explorations</h3>
+              <p class="subsection-note">Targeted learning exercises and API prototypes.</p>
+            </div>
+          </div>
+
+          <!-- Journey Interactive Canvas & Track -->
+          <div class="journey-track-wrapper" id="journey-track-wrapper">
+            <!-- SVG Straight Track Line -->
+            <svg class="journey-svg-canvas" viewBox="0 0 720 100" fill="none" preserveAspectRatio="none" aria-hidden="true">
+              <!-- Background straight track -->
+              <line class="journey-path-track" x1="180" y1="38" x2="540" y2="38" stroke="#C6A98B" stroke-width="4" stroke-linecap="round" />
+              <!-- Terracotta progress stroke -->
+              <line class="journey-path-active" id="journey-path-active" x1="180" y1="38" x2="540" y2="38" stroke="#A66B4F" stroke-width="4" stroke-linecap="round" stroke-dasharray="360" stroke-dashoffset="360" />
+            </svg>
+
+            <!-- Interactive Milestone Nodes -->
+            <div class="journey-nodes-layer">
+              
+              <!-- Node 1: Web Scraping -->
+              <div class="journey-node-item active" style="left: 25%; top: 38px;" data-index="0" tabindex="0" role="button" aria-label="Milestone 1: Python Web Scraping">
+                <div class="journey-node-circle">
+                  <span class="node-index">01</span>
+                </div>
+                <span class="journey-node-caption">Python Web Scraping</span>
+              </div>
+
+              <!-- Node 2: FastAPI Blog API -->
+              <div class="journey-node-item" style="left: 75%; top: 38px;" data-index="1" tabindex="0" role="button" aria-label="Milestone 2: FastAPI Blog API">
+                <div class="journey-node-circle">
+                  <span class="node-index">02</span>
+                </div>
+                <span class="journey-node-caption">FastAPI Blog API</span>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Active Journey Details Showcase Card -->
+          <div class="journey-showcase-container">
+            <div class="journey-showcase-card" id="journey-showcase-card">
+              <div class="journey-card-topbar">
+                <span class="status-pill status-deployed" id="journey-status-pill">Learning Project</span>
+                <span class="journey-milestone-tag" id="journey-milestone-tag">Milestone 01 / 02</span>
+              </div>
+              <h4 class="journey-showcase-title" id="journey-showcase-title">Python Web Scraping</h4>
+              <p class="journey-showcase-stack" id="journey-showcase-stack">Python &bull; Requests &bull; BeautifulSoup &bull; MySQL</p>
+              <p class="journey-showcase-desc" id="journey-showcase-desc">
+                A learning project focused on automated web data extraction and structured persistence. Built custom scraping workflows utilizing Requests and BeautifulSoup to parse page hierarchies, extract metadata, clean datasets, and persist information into MySQL tables.
+              </p>
+              <div class="journey-showcase-actions" id="journey-showcase-actions">
+                <a href="https://github.com/pooji-tha11/WebScraping" target="_blank" rel="noopener" class="link-arrow" id="journey-action-link">
+                  View on GitHub &rarr;
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- WORK, EXPERIENCE (Dark Espresso Section with Self-Drawing Timeline) -->
+      <div class="experience-section section-dark" id="experience">
+        <div class="container">
+          <div class="section-header-compact">
+            <h3 class="subsection-title text-light">Experience &amp; Internships</h3>
+            <p class="subsection-note text-light-muted">Practical industry exposure in ticketing systems, prompt engineering, open-source initiatives, and full-stack development.</p>
+          </div>
+
+          <div class="timeline-container" id="timeline-container">
+            <!-- Dynamic self-drawing SVG line -->
+            <div class="timeline-line-track">
+              <div class="timeline-line-progress" id="timeline-progress"></div>
+            </div>
+
+            <div class="timeline-items">
+              
+              <!-- 1. Infologia Technologies -->
+              <div class="timeline-entry" data-index="0">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                  <div class="timeline-header">
+                    <h4 class="timeline-role">AI Developer Intern</h4>
+                    <span class="timeline-company">Infologia Technologies Pvt. Ltd.</span>
+                    <span class="timeline-date">11 Nov 2026 &ndash; 11 Dec 2026 &bull; Onsite &bull; Ongoing</span>
+                  </div>
+                  <p class="timeline-desc">
+                    Working on building an internal ticketing tool and system (currently in the research and architecture stage). Analyzing ticketing requirements, issue lifecycle workflows, and foundational system design.
+                  </p>
+                </div>
+              </div>
+
+              <!-- 2. InAmigos Foundation -->
+              <div class="timeline-entry" data-index="1">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                  <div class="timeline-header">
+                    <h4 class="timeline-role">Prompt Engineer Intern</h4>
+                    <span class="timeline-company">InAmigos Foundation</span>
+                    <span class="timeline-date">November 2026 &bull; ~2 Weeks</span>
+                  </div>
+                  <p class="timeline-desc">
+                    Investigated prompt structure, role assignment methodologies, and the STAR framework to calibrate generative outputs for predictable, structured business communication.
+                  </p>
+                </div>
+              </div>
+
+              <!-- 3. FOSS Club at CIT -->
+              <div class="timeline-entry" data-index="2">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                  <div class="timeline-header">
+                    <h4 class="timeline-role">Technical Member</h4>
+                    <span class="timeline-company">FOSS Club &bull; Chennai Institute of Technology</span>
+                    <span class="timeline-date">August 2026 &ndash; Present</span>
+                  </div>
+                  <p class="timeline-desc">
+                    Conducted an introductory Linux workshop covering command-line fundamentals, directory navigation, and system tool configuration for peers. Actively participating in club initiatives and beginning to explore open-source contributions.
+                  </p>
+                </div>
+              </div>
+
+              <!-- 4. LambdaDigital -->
+              <div class="timeline-entry" data-index="3">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                  <div class="timeline-header">
+                    <h4 class="timeline-role">Software Developer Intern</h4>
+                    <span class="timeline-company">LambdaDigital</span>
+                    <span class="timeline-date">14 May 2026 &ndash; 12 Jun 2026</span>
+                  </div>
+                  <p class="timeline-desc">
+                    Implemented modular full-stack application features utilizing React.js and FastAPI. Integrated frontend UI components with backend API endpoints, worked with entity-relationship (ER) models, participated in feature planning, and maintained version control workflows with Git and GitHub.
+                  </p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- 4. EDUCATION -->
+    <section class="section-education section-sand" id="education" aria-label="Education and Certifications">
+      <div class="container">
+        
+        <div class="education-header">
+          <h2 class="section-heading reveal-heading">Education &amp; Credentials</h2>
+        </div>
+
+        <div class="education-cards-list">
+          <!-- 1. Undergraduate College -->
+          <div class="education-card">
+            <div class="edu-main">
+              <span class="edu-badge">Undergraduate Degree</span>
+              <h3 class="edu-degree">Bachelor of Engineering &mdash; Computer Science &amp; Engineering</h3>
+              <p class="edu-school">Chennai Institute of Technology, Anna University Affiliated</p>
+            </div>
+            <div class="edu-period">
+              <span>2025 &ndash; 2029</span>
+              <span class="edu-status">Second Year (Current)</span>
+            </div>
+          </div>
+
+          <!-- 2. Higher Secondary School (11th & 12th) -->
+          <div class="education-card">
+            <div class="edu-main">
+              <span class="edu-badge">Higher Secondary &bull; 11th &amp; 12th</span>
+              <h3 class="edu-degree">Higher Secondary Education</h3>
+              <p class="edu-school">Narayana e-Techno School, Pallavaram</p>
+            </div>
+            <div class="edu-period">
+              <span class="edu-score">86.0%</span>
+              <span class="edu-status">12th Board Score</span>
+            </div>
+          </div>
+
+          <!-- 3. Secondary School (9th & 10th) -->
+          <div class="education-card">
+            <div class="edu-main">
+              <span class="edu-badge">Secondary School &bull; 9th &amp; 10th</span>
+              <h3 class="edu-degree">Secondary School Education</h3>
+              <p class="edu-school">Narayana e-Techno School, Medavakkam</p>
+            </div>
+            <div class="edu-period">
+              <span class="edu-score">92.2%</span>
+              <span class="edu-status">10th Board Score</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="certifications-block">
+          <h3 class="subsection-title">Certifications &amp; Professional Simulations</h3>
+          <p class="subsection-note">Independent verified credentials and industry simulations.</p>
+
+          <div class="cert-rows-table">
+            
+            <!-- Certification 1 -->
+            <div class="cert-row">
+              <div class="cert-col cert-name">
+                <span class="cert-title">Oracle Cloud Infrastructure Certified AI Foundations Associate</span>
+                <span class="cert-issuer">Oracle</span>
+              </div>
+              <div class="cert-col cert-date">
+                <span>19 Sep 2026</span>
+              </div>
+              <div class="cert-col cert-type">
+                <span class="pill-cert">Cloud &amp; AI</span>
+              </div>
+            </div>
+
+            <!-- Certification 2 -->
+            <div class="cert-row">
+              <div class="cert-col cert-name">
+                <span class="cert-title">NPTEL Ethical Hacking</span>
+                <span class="cert-issuer">IIT Kharagpur / NPTEL (12 weeks, 58%)</span>
+              </div>
+              <div class="cert-col cert-date">
+                <span>Jul &ndash; Oct 2026</span>
+              </div>
+              <div class="cert-col cert-type">
+                <span class="pill-cert">Cybersecurity</span>
+              </div>
+            </div>
+
+            <!-- Certification 3 -->
+            <div class="cert-row">
+              <div class="cert-col cert-name">
+                <span class="cert-title">Deloitte Cyber Job Simulation</span>
+                <span class="cert-issuer">Deloitte &bull; Forage</span>
+              </div>
+              <div class="cert-col cert-date">
+                <span>29 Mar 2026</span>
+              </div>
+              <div class="cert-col cert-type">
+                <span class="pill-cert">Job Simulation</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 5. CONTACT (Dark Espresso Section) -->
+    <section class="section-contact section-dark" id="contact" aria-label="Contact and Social Links">
+      <div class="container contact-container">
+        
+        <div class="contact-header">
+          <span class="contact-kicker">Get in touch</span>
+          <h2 class="contact-giant-heading">Say hello.</h2>
+          <p class="contact-intro">
+            Whether you would like to discuss defensive security, open-source projects, collaborate on backend engineering, or simply talk tech&mdash;my inbox is always open.
+          </p>
+        </div>
+
+        <div class="contact-pills-row">
+          <!-- Email Mailto -->
+          <a href="mailto:poojitharamk11@gmail.com" class="contact-pill-btn">
+            <span class="pill-icon">@</span>
+            <span class="pill-label">poojitharamk11@gmail.com</span>
+          </a>
+
+          <!-- LinkedIn -->
+          <a href="https://www.linkedin.com/in/poojitha-ramkumar/" target="_blank" rel="noopener" class="contact-pill-btn">
+            <svg class="pill-svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+            <span class="pill-label">LinkedIn</span>
+          </a>
+
+          <!-- GitHub -->
+          <a href="https://github.com/pooji-tha11" target="_blank" rel="noopener" class="contact-pill-btn">
+            <svg class="pill-svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
+            <span class="pill-label">GitHub</span>
+          </a>
+        </div>
+
+        <footer class="site-footer">
+          <p class="footer-copy">&copy; 2026 Poojitha Ramkumar, Chennai</p>
+          <a href="#home" class="back-to-top" id="back-to-top" aria-label="Back to top">
+            <span>Back to top</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+          </a>
+        </footer>
+
+      </div>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
