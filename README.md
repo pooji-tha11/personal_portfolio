@@ -1,6 +1,6 @@
 # Poojitha Ramkumar — Portfolio
 
-A personal portfolio website for **Poojitha Ramkumar**, Computer Science and Engineering student at Chennai Institute of Technology (2025–2029).
+A personal portfolio website for **Poojitha Ramkumar**(me), a Computer Science and Engineering student at Chennai Institute of Technology (2025–2029).
 
 Built with a warm editorial aesthetic using pure vanilla web technologies — no frameworks, no bundlers, and zero dependencies.
 
