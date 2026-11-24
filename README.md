@@ -56,4 +56,4 @@ Then visit `http://localhost:8000` in your browser. Alternatively, open `index.h
 
 - **GitHub**: [@pooji-tha11](https://github.com/pooji-tha11)
 - **LinkedIn**: [Poojitha Ramkumar](https://www.linkedin.com/in/poojitha-ramkumar/)
-- **Email**: [poojitharamk11@gmail.com](mailto:poojitharamk11@gmail.com)
+- **Email**: [Email Me](mailto:poojitharamk11@gmail.com)

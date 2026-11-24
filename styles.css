@@ -973,7 +973,7 @@ body.intro-active {
 .skill-tile {
   background-color: var(--bg-ivory);
   border: 1.5px solid var(--border-caramel);
-  border-radius: 18px;
+  border-radius: 24px;
   padding: 1.75rem;
   position: relative;
   overflow: hidden;
@@ -1047,8 +1047,8 @@ body.intro-active {
   font-weight: 600;
   color: var(--text-espresso);
   background-color: var(--bg-sand);
-  padding: 0.35rem 0.85rem;
-  border-radius: 8px;
+  padding: 0.42rem 1rem;
+  border-radius: 9999px;
   border: 1px solid var(--border-caramel);
   transition: transform 0.2s ease, background-color 0.2s, color 0.2s;
 }
